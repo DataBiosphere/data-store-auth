@@ -13,6 +13,9 @@ DSS_DEPLOYMENT_STAGE="dev"
 DSS_PLATFORM="ucsc-cgp"
 DSS_SECRETS_STORE="${DSS_PLATFORM}/dss"
 
+DSS_INFRA_TAG_PROJECT="${DSS_PLATFORM}-dss"
+DSS_INFRA_TAG_SERVICE="dss"
+DSS_INFRA_TAG_OWNER="team-redwood-group@ucsc.edui"
 
 #not sure if these are needed
 OIDC_AUDIENCE=https://dss.dev.ucsc-cgp-redwood.org

@@ -72,7 +72,6 @@ provider auth0 {{
 
 env_vars_to_infra = [
     "DSS_DEPLOYMENT_STAGE",
-    "DSS_GCP_SERVICE_ACCOUNT_NAME",
     "DSS_INFRA_TAG_OWNER",
     "DSS_INFRA_TAG_PROJECT",
     "DSS_INFRA_TAG_SERVICE",
