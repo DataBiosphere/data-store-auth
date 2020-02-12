@@ -22,13 +22,7 @@ OIDC_EMAIL_CLAIM="${OIDC_AUDIENCE}/email"
 OIDC_GROUP_CLAIM="${OIDC_AUDIENCE}/group"
 
 
-##
 AUTH_TENANT_SECRET_NAME="auth_tenant"
-
-# These are placeholders, please please these in an environment.local to avoid leaks.
-AUTH_TENANT_URL="something.auth0.com"
-AUTH_CLIENT_ID="2333"
-AUTH_CLIENT_SECRet="shhh"
 
 AWS_SDK_LOAD_CONFIG=1 # Needed for Terraform to correctly use AWS assumed roles
 
