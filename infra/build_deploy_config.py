@@ -2,6 +2,7 @@
 """
 Build the Terraform deployment configuration files using environment variable values.
 Requires a Google service account (but only to get the GCP project ID).
+Auth0 Tenant Information is gathered from the secrets manager
 """
 import os
 import glob
@@ -12,6 +13,21 @@ from google.cloud.storage import Client
 GCP_PROJECT_ID = Client().project
 
 infra_root = os.path.abspath(os.path.dirname(__file__))
+
+
+def get_auth_tenant_config():
+    sm_client = boto3.client("secretsmanager")
+    secrets_store = os.environ['DDS_SECRETS_STORE']
+    stage = os.environ['DDS_DEPLOYMENT_STAGE']
+    auth_secret_name = os.environ['AUTH_TENANT_SECRET_NAME']
+    secret_id = f'{secrets_store}/{stage}/{auth_secret_name}'
+    try:
+        resp = sm_client.get_secret_value(SecretID=secret_id)
+    except sm_client.exceptions.ResourceNotFoundException:
+        print(f'Unable to locate secret: {secret_id} in aws SSM, please inspect')
+        exit(-1)
+    else:
+        return json.loads(resp['SecretString'])
 
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -48,49 +64,19 @@ provider google {{
 }}
 
 provider auth0 {{
-    domain = "{auth_domain}"
-    client_id = "{auth_client_id}"
-    client_secret = "{auth_client_secret}"
+    domain = "{tenant_domain_url}"
+    client_id = "{tenant_client_id}"
+    client_secret = "{tenant_client_secret}"
 }}
 """
 
 env_vars_to_infra = [
-    "ACM_CERTIFICATE_IDENTIFIER",
-    "API_DOMAIN_NAME",
-    "AWS_DEFAULT_REGION",
-    "DSS_BLOB_TTL_DAYS",
-    "DSS_CHECKOUT_BUCKET_OBJECT_VIEWERS",
     "DSS_DEPLOYMENT_STAGE",
-    "DSS_ES_DOMAIN",
-    "DSS_ES_DOMAIN_INDEX_LOGS_ENABLED",
-    "DSS_ES_INSTANCE_COUNT",
-    "DSS_ES_INSTANCE_TYPE",
-    "DSS_ES_VOLUME_SIZE",
     "DSS_GCP_SERVICE_ACCOUNT_NAME",
-    "DSS_GS_BUCKET",
-    "DSS_GS_BUCKET_TEST",
-    "DSS_GS_BUCKET_TEST_FIXTURES",
-    "DSS_GS_CHECKOUT_BUCKET",
-    "DSS_GS_CHECKOUT_BUCKET_TEST",
-    "DSS_GS_CHECKOUT_BUCKET_TEST_USER",
     "DSS_INFRA_TAG_OWNER",
     "DSS_INFRA_TAG_PROJECT",
     "DSS_INFRA_TAG_SERVICE",
-    "DSS_S3_BUCKET",
-    "DSS_S3_BUCKET_TEST",
-    "DSS_S3_BUCKET_TEST_FIXTURES",
-    "DSS_S3_CHECKOUT_BUCKET",
-    "DSS_S3_CHECKOUT_BUCKET_TEST",
-    "DSS_S3_CHECKOUT_BUCKET_TEST_USER",
-    "DSS_S3_CHECKOUT_BUCKET_UNWRITABLE",
-    "DSS_FLASHFLOOD_BUCKET",
-    "DSS_FLASHFLOOD_BUCKET_INTEGRATION",
-    "DSS_FLASHFLOOD_BUCKET_PROD",
-    "DSS_FLASHFLOOD_BUCKET_STAGING",
-    "DSS_CLI_BUCKET_TEST",
     "DSS_SECRETS_STORE",
-    "DSS_ZONE_NAME",
-    "ES_ALLOWED_SOURCE_IP_SECRETS_NAME",
     "GCP_DEFAULT_REGION",
 ]
 
@@ -116,8 +102,12 @@ with open(os.path.join(infra_root, args.component, "variables.tf"), "w") as fp:
         val = os.environ[key]
         fp.write(terraform_variable_template.format(name=key, val=val))
 
+tenant_data = get_auth_tenant_config()
 with open(os.path.join(infra_root, args.component, "providers.tf"), "w") as fp:
     fp.write(terraform_providers_template.format(
         aws_region=os.environ['AWS_DEFAULT_REGION'],
         gcp_project_id=GCP_PROJECT_ID,
+        tenant_domain_url=tenant_data['tenant_domain_url'],
+        tenant_client_id=tenant_data['tenant_client_id'],
+        tenant_client_secret=tenant_data['tenant_client_secret']
     ))
