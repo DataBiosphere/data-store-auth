@@ -1,20 +1,13 @@
 # DSS Auth Environment Variables
 #
-<<<<<<< HEAD
 # Resolve the location of this file and set DSS_AUTH_HOME to the root
 
-=======
-# Resolve the location of this file and set DSS_HOME to the root
->>>>>>> a8020af609bfbbbb296b0dcdc253c1700e01cc17
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
 export DSS_AUTH_HOME="$(cd -P "$(dirname "$SOURCE")" && pwd)"
 
-<<<<<<< HEAD
 set -a
 
-=======
->>>>>>> a8020af609bfbbbb296b0dcdc253c1700e01cc17
 AWS_DEFAULT_OUTPUT=json
 AWS_DEFAULT_REGION=us-east-1
 GCP_DEFAULT_REGION=us-central1
