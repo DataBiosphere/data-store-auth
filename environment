@@ -1,0 +1,44 @@
+# DSS Auth Environment Variables
+#
+# Resolve the location of this file and set DSS_AUTH_HOME to the root
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
+export DSS_AUTH_HOME="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+
+set -a
+
+AWS_DEFAULT_OUTPUT=json
+AWS_DEFAULT_REGION=us-east-1
+GCP_DEFAULT_REGION=us-central1
+GCP_PROJECT_ID="platform-hca"
+DSS_DEPLOYMENT_STAGE="dev"
+DSS_PLATFORM="ucsc-cgp"
+DSS_SECRETS_STORE="${DSS_PLATFORM}/dss"
+
+DSS_INFRA_TAG_PROJECT="${DSS_PLATFORM}-dss"
+DSS_INFRA_TAG_SERVICE="dss"
+DSS_INFRA_TAG_OWNER="team-redwood-group@ucsc.edui"
+
+#not sure if these are needed
+OIDC_AUDIENCE=https://dss.dev.ucsc-cgp-redwood.org
+AUTH_URL=https://auth.ucsc.ucsc-cgp-redwood.org
+OPENID_PROVIDER=https://dev-4lyab62k.auth0.com/
+OIDC_EMAIL_CLAIM="${OIDC_AUDIENCE}/email"
+OIDC_GROUP_CLAIM="${OIDC_AUDIENCE}/group"
+
+
+AUTH_TENANT_SECRET_NAME="auth_tenant"
+
+AWS_SDK_LOAD_CONFIG=1 # Needed for Terraform to correctly use AWS assumed roles
+
+# `{account_id}`, if present, will be replaced with the account ID associated with the AWS credentials used for
+# deployment. It can be safely omitted.
+DSS_TERRAFORM_BACKEND_BUCKET_TEMPLATE="${DSS_PLATFORM}-dss-${DSS_DEPLOYMENT_STAGE}-terraform"
+
+
+set +a
+
+if [[ -f "${DSS_HOME}/environment.local" ]]; then
+    source "${DSS_HOME}/environment.local"
+fi
