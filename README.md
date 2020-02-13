@@ -22,7 +22,7 @@ In order to get the infra scripts setup correctly, some of the auth0 tenant data
 ```
 Then use the following command to set the secret within the aws secret manager
 ```
-cat $DSS_AUTH_HOME/tenant_secrets.json | scripts/set_secret.py --secret-name $AUTH_TENANT_SECRET_NAME --secret-value 
+scripts/set_secret.py --secret-name $AUTH_TENANT_SECRET_NAME < $DSS_AUTH_HOME/tenant_secrets.json   
 ```
 
 ### Infra Deployment

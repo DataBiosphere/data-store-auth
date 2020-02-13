@@ -17,8 +17,8 @@ infra_root = os.path.abspath(os.path.dirname(__file__))
 
 def get_auth_tenant_config():
     sm_client = boto3.client("secretsmanager")
-    secrets_store = os.environ['DDS_SECRETS_STORE']
-    stage = os.environ['DDS_DEPLOYMENT_STAGE']
+    secrets_store = os.environ['DSS_SECRETS_STORE']
+    stage = os.environ['DSS_DEPLOYMENT_STAGE']
     auth_secret_name = os.environ['AUTH_TENANT_SECRET_NAME']
     secret_id = f'{secrets_store}/{stage}/{auth_secret_name}'
     try:

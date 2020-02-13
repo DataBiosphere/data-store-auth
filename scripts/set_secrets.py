@@ -7,8 +7,8 @@ import argparse
 
 
 sm_client = boto3.client('secretsmanager')
-secrets_store = os.environ['DDS_SECRETS_STORE']
-stage = os.environ['DDS_DEPLOYMENT_STAGE']
+secrets_store = os.environ['DSS_SECRETS_STORE']
+stage = os.environ['DSS_DEPLOYMENT_STAGE']
 
 
 parser = argparse.ArgumentParser(description=__doc__)
