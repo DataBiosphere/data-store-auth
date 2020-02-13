@@ -22,7 +22,7 @@ def get_auth_tenant_config():
     auth_secret_name = os.environ['AUTH_TENANT_SECRET_NAME']
     secret_id = f'{secrets_store}/{stage}/{auth_secret_name}'
     try:
-        resp = sm_client.get_secret_value(SecretID=secret_id)
+        resp = sm_client.get_secret_value(SecretId=secret_id)
     except sm_client.exceptions.ResourceNotFoundException:
         print(f'Unable to locate secret: {secret_id} in aws SSM, please inspect')
         exit(-1)
