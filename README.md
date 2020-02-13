@@ -13,6 +13,8 @@ Setup Steps
 
 ### Secret Setup
 In order to get the infra scripts setup correctly, some of the auth0 tenant data needs to be uploaded, here is an example:
+The `tentant_client_id` and `tenant_client_secret` can be found by creating an `Auth0 Management API`, then into the
+Application settings for the `API Exploration Application`**** 
 
 `$DSS_AUTH_HOME/tenant_secrets.json`
 ```

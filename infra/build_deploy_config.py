@@ -77,6 +77,7 @@ env_vars_to_infra = [
     "DSS_INFRA_TAG_SERVICE",
     "DSS_SECRETS_STORE",
     "GCP_DEFAULT_REGION",
+    "OIDC_AUDIANCE"
 ]
 
 with open(os.path.join(infra_root, args.component, "backend.tf"), "w") as fp:
