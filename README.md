@@ -14,24 +14,26 @@ Setup Steps
 In order to deploy the infra in this repository, you will need to install Terraform and an Auth0 Terraform
 provider. We use this Auth0 terraform provider: [alexkappa/terraform-provider-auth0](https://github.com/alexkappa/terraform-provider-auth0).
 
-To install terraform, download the Linux binary, unzip it to a directory on your path, and test it is available:
+To install terraform, download the binary for your OS, unzip it to a directory on your path, and test it is available:
 
 ```
 export TF_VERSION="0.12.16"
-wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-unzip terraform_${TF_VERSION}_linux_amd64.zip -d ${HOME}/bin
+export OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_${OS}_amd64.zip
+unzip terraform_${TF_VERSION}_${OS}_amd64.zip -d ${HOME}/bin
 export PATH="${HOME}/bin:${PATH}"
 which terraform
 ```
 
-To install the Auth0 provider for terraform, download the Linux binary and add it to the Terraform plugins
+To install the Auth0 provider for terraform, download the binary for your OS and add it to the Terraform plugins
 directory:
 
 ```
 export TF_AUTH0_VERSION="0.5.1"
+export OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 export TF_PLUGINS_DIR="${HOME}/.terraform.d/plugins"
-wget https://github.com/alexkappa/terraform-provider-auth0/releases/download/v${TF_AUTH0_VERSION}/terraform-provider-auth0_v${TF_AUTH0_VERSION}_linux_amd64.tar.gz
-mkdir -p ${TF_PLUGINS_DIR} && tar xzf terraform-provider-auth0_v${TF_AUTH0_VERSION}_linux_amd64.tar.gz -C ${TF_PLUGINS_DIR}
+wget https://github.com/alexkappa/terraform-provider-auth0/releases/download/v${TF_AUTH0_VERSION}/terraform-provider-auth0_v${TF_AUTH0_VERSION}_${OS}_amd64.tar.gz
+mkdir -p ${TF_PLUGINS_DIR} && tar xzf terraform-provider-auth0_v${TF_AUTH0_VERSION}_${OS}_amd64.tar.gz -C ${TF_PLUGINS_DIR}
 ```
 
 
