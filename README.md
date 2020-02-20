@@ -9,7 +9,7 @@ Setup Steps
 1. deploy infra -> sets up all the stuff. more here later. 
 
 
-### Installation
+### Terraform Installation
 
 In order to deploy the infra in this repository, you will need to install Terraform and an Auth0 Terraform
 provider. We use this Auth0 terraform provider: [alexkappa/terraform-provider-auth0](https://github.com/alexkappa/terraform-provider-auth0).
@@ -32,6 +32,17 @@ export TF_AUTH0_VERSION="0.5.1"
 export TF_PLUGINS_DIR="${HOME}/.terraform.d/plugins"
 wget https://github.com/alexkappa/terraform-provider-auth0/releases/download/v${TF_AUTH0_VERSION}/terraform-provider-auth0_v${TF_AUTH0_VERSION}_linux_amd64.tar.gz
 mkdir -p ${TF_PLUGINS_DIR} && tar xzf terraform-provider-auth0_v${TF_AUTH0_VERSION}_linux_amd64.tar.gz -C ${TF_PLUGINS_DIR}
+```
+
+
+### Python Installation
+
+It is recommended that Python dependencies be installed into a virtual environment to avoid versioning conflicts.
+
+To install all Python dependencies for this project:
+
+```
+pip install -r requirements.txt
 ```
 
 
