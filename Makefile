@@ -7,7 +7,7 @@ deploy-infra:
 	$(MAKE) -C infra apply-all
 
 requirements.txt: %.txt : %.txt.in
-	[ ! -e .requirements-env ] || exit 1
+	test ! -e .requirements-env || exit 1
 	virtualenv -p $(shell which python3) .$<-env
 	.$<-env/bin/pip install -r $@
 	.$<-env/bin/pip install -r $<
