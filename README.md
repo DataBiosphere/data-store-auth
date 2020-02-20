@@ -66,3 +66,14 @@ scripts/set_secret.py --secret-name $AUTH_TENANT_SECRET_NAME < $DSS_AUTH_HOME/te
 ### Infra Deployment
 
 
+### Updating Requirements
+
+The file `requirements.txt.in` contains a short list of less strict version requirements. These are resolved and
+the specific version numbers for all software dpeendencies are pinned in `requirements.txt`.
+
+To update the requirements file `requirements.txt` from `requirements.txt.in`, use the `refresh_all_requirements` make rule:
+
+```
+make refresh_all_requirements
+```
+
