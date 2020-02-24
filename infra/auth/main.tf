@@ -78,6 +78,14 @@ EOF
   enabled = true
 }
 
+
+resource "auth0_tenant" "tenant" {
+  default_audience  = "${auth0_resource_server.client_id}"
+  default_directory = "Username-Password-Authentication"
+  friendly_name = "${var.DSS_PLATFORM}-${var.DSS_DEPLOYMENT_STAGE}"
+  support_email = "${var.DSS_INFRA_TAG_OWNER}"
+}
+
 output  "google-connector" {
   # these values are need to setup social login on google...
   sensitive = true
