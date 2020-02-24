@@ -9,6 +9,16 @@ locals {
   )}"
 }
 
+resource "auth0_resource_server" "dev_api_resource_server" {
+  name        = "Redwood Dev Resource Server"
+  identifier  = "https://dev.ucsc-cgp-redwood.org/"
+  signing_alg = "RS256"
+
+  allow_offline_access                            = true
+  token_lifetime                                  = 8600
+  skip_consent_for_verifiable_first_party_clients = true
+}
+
 resource "auth0_client" "dss_auth" {
   name = "data-store-auth"
   description = "simple auth system for the data-store"
