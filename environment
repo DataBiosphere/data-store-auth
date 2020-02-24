@@ -21,7 +21,7 @@ DSS_INFRA_TAG_SERVICE="dss"
 DSS_INFRA_TAG_OWNER="team-redwood-group@ucsc.edu"
 
 # dont use interpolation on the stage here, its going to change the claims that are set in the auth0_rule
-OIDC_AUDIENCE=https://dss.dev.ucsc-cgp-redwood.org
+OIDC_AUDIENCE=https://dev.ucsc-cgp-redwood.org/
 
 
 AUTH_TENANT_SECRET_NAME="auth_tenant"

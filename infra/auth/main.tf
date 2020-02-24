@@ -11,7 +11,7 @@ locals {
 
 resource "auth0_resource_server" "dev_api_resource_server" {
   name        = "Redwood Dev Resource Server"
-  identifier  = "https://dev.ucsc-cgp-redwood.org/"
+  identifier  = var.OIDC_AUDIENCE
   signing_alg = "RS256"
 
   allow_offline_access                            = true
@@ -38,7 +38,7 @@ resource "auth0_client" "dss_auth" {
     alg = "RS256"
     scopes = {
       foo = "bar"
-      # this might need to be
+      # this has to be updated at a later time
     }
   }
   client_metadata = local.common_tags
@@ -80,10 +80,10 @@ EOF
 
 
 resource "auth0_tenant" "tenant" {
-  default_audience  = "${auth0_resource_server.client_id}"
+  default_audience  = var.OIDC_AUDIENCE
   default_directory = "Username-Password-Authentication"
   friendly_name = "${var.DSS_PLATFORM}-${var.DSS_DEPLOYMENT_STAGE}"
-  support_email = "${var.DSS_INFRA_TAG_OWNER}"
+  support_email = var.DSS_INFRA_TAG_OWNER
 }
 
 output  "google-connector" {
