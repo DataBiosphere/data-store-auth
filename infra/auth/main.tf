@@ -53,7 +53,7 @@ resource "auth0_connection" "google_connector" {
 }
 
 resource "auth0_rule" "custom_claim" {
-  name = "jwt_claim_from_domain"
+  name = "jwt-claim-from-domain"
   // this script might need to be migrated out of this and into the build script....
   script = <<EOF
 function (user, context, callback) {
