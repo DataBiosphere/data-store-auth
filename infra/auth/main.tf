@@ -59,7 +59,7 @@ resource "auth0_rule" "custom_claim" {
 function (user, context, callback) {
     var privileged_domains = ["ucsc.edu","platform-hca.iam.gserviceaccount.com"]; //authorized domains
     var domain = user.email.split('@').pop();
-    const namespace = "${var.OIDC_AUDIANCE}";
+    const namespace = "${var.OIDC_AUDIENCE}";
     var userHasAccess = privileged_domains.some(
       function (email) {
         return email === domain;
