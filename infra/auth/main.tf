@@ -21,7 +21,7 @@ resource "auth0_resource_server" "dev_api_resource_server" {
 
 resource "auth0_client" "dss_auth" {
   name = "data-store-auth"
-  description = "simple auth system for the data-store"
+  description = "simple auth system for the data-store; managed by Terraform"
   app_type = "regular_web"
   is_first_party = true
   is_token_endpoint_ip_header_trusted = true
@@ -84,6 +84,18 @@ resource "auth0_tenant" "tenant" {
   default_directory = "Username-Password-Authentication"
   friendly_name = "${var.DSS_PLATFORM}-${var.DSS_DEPLOYMENT_STAGE}"
   support_email = var.DSS_INFRA_TAG_OWNER
+  flags {
+    change_pwd_flow_v1 = false
+    disable_clickjack_protection_headers = true
+    enable_apis_section = false
+    enable_client_connections = false
+    enable_custom_domain_in_emails = false
+    enable_dynamic_client_registration = false
+    enable_legacy_logs_search_v2 = false
+    enable_pipeline2 = false
+    enable_public_signup_user_exists_error = true
+    universal_login = false
+  }
 }
 
 output  "google-connector" {

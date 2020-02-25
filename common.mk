@@ -10,5 +10,5 @@ $(error You must use Terraform v0.12.16, please check your terraform version.)
 endif
 
 ifeq ("$(wildcard ~/.terraform.d/plugins/terraform-provider-auth0_v0.5.1)", "")
-$(error You must have auth0 plug-in installed to ~/.terraform.d/plugins/terraform-provider-auth0_v0.5.1, try)
+$(error You must have auth0 plug-in installed to ~/.terraform.d/plugins/terraform-provider-auth0_v0.5.1)
 endif
