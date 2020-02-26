@@ -71,14 +71,16 @@ provider auth0 {{
 """
 
 env_vars_to_infra = [
+    "AUTH_URL",
     "DSS_DEPLOYMENT_STAGE",
     "DSS_INFRA_TAG_OWNER",
     "DSS_INFRA_TAG_PROJECT",
     "DSS_INFRA_TAG_SERVICE",
+    "DSS_PLATFORM",
     "DSS_SECRETS_STORE",
     "GCP_DEFAULT_REGION",
     "OIDC_AUDIENCE",
-    "DSS_PLATFORM"
+    "OPENID_PROVIDER"
 ]
 
 with open(os.path.join(infra_root, args.component, "backend.tf"), "w") as fp:

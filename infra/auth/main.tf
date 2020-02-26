@@ -27,7 +27,7 @@ resource "auth0_client" "dss_auth" {
   is_token_endpoint_ip_header_trusted = true
   token_endpoint_auth_method = "client_secret_post"
   oidc_conformant = true
-  callbacks = [ "https://example.com/callback", "http://localhost:8080" ]
+  callbacks = [ "http://localhost:8080" ]
   allowed_origins = [ "http://localhost:8080" ]
   grant_types = [ "authorization_code", "refresh_token" ]
   allowed_logout_urls = [ "https://example.com" ]
@@ -65,12 +65,12 @@ function (user, context, callback) {
         return email === domain;
       });
 
-    context.accessToken[namespace + '/email']= user.email;
+    context.accessToken[namespace + 'email']= user.email;
 
     if (userHasAccess) {
-      context.accessToken[namespace + '/group'] = 'dbio';
+      context.accessToken[namespace + 'group'] = 'dbio';
     } else {
-      context.accessToken[namespace + '/group'] = 'public';
+      context.accessToken[namespace + 'group'] = 'public';
     }
     callback(null, user, context);
 }
@@ -81,7 +81,6 @@ EOF
 
 resource "auth0_tenant" "tenant" {
   default_audience  = var.OIDC_AUDIENCE
-  default_directory = "Username-Password-Authentication"
   friendly_name = "${var.DSS_PLATFORM}-${var.DSS_DEPLOYMENT_STAGE}"
   support_email = var.DSS_INFRA_TAG_OWNER
   flags {
@@ -98,9 +97,26 @@ resource "auth0_tenant" "tenant" {
   }
 }
 
-output  "google-connector" {
-  # these values are need to setup social login on google...
-  sensitive = true
-  value = [
-    "${auth0_connection.google_connector}"]
+
+output "dss_application_secrets" {
+  value = {
+    "installed"= {
+    "auth_uri" = "${var.OPENID_PROVIDER}authorize",
+    "token_uri"= "${var.OPENID_PROVIDER}oauth/token",
+    "client_id"= auth0_client.dss_auth.client_id,
+    "client_secret"= auth0_client.dss_auth.client_secret,
+    "redirect_uris"= ["urn:ietf:wg:oauth:2.0:oob", "http://localhost:8080"]
+    }
+  }
+}
+
+output "dss_env_vars" {
+  value = <<EOF
+# Warning back slashes are sensitive here
+OIDC_AUDIENCE="${var.OIDC_AUDIENCE}"
+AUTH_URL="${var.AUTH_URL}"
+OPENID_PROVIDER="${var.OPENID_PROVIDER}"
+OIDC_EMAIL_CLAIM="${var.OIDC_AUDIENCE}email"
+OIDC_GROUP_CLAIM="${var.OIDC_AUDIENCE}group"
+EOF
 }
