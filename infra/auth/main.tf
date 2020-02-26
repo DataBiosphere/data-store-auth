@@ -30,8 +30,8 @@ resource "auth0_client" "dss_auth" {
   callbacks = [ "http://localhost:8080" ]
   allowed_origins = [ "http://localhost:8080" ]
   grant_types = [ "authorization_code", "refresh_token" ]
-  allowed_logout_urls = [ "https://example.com" ]
-  web_origins = [ "https://example.com" ]
+
+
   jwt_configuration {
     lifetime_in_seconds = 300
     secret_encoded = true
