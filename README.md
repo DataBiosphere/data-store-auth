@@ -2,11 +2,19 @@
 
 This repo is used to setup an Auth service for the [data-store](https://github.com/databiosphere/data-store).
 
-Setup Steps
+Auth0 provides a resource server that is used for Auth service requests, enabling certain users to perform protected actions.
+The Auth server client is connected into Google IdProvider as a social identity provider. JWT's are populated with custom
+OIDC_Claims (email / group) to indicate additional information to the resource-server for access control.
 
+### Setup/Deploy Steps
+
+1. install Terraform provider: [see info below](#Terraform-Installation) 
 1. configure a tenant with Auth0
+1. update `$DSS_AUTH_HOME/environment` values with information from Tenant
 1. set the secret with the Auth0 Management API in the aws secret-store [Secret Setup](#Secret-Setup)
-1. deploy infra -> sets up all the stuff. more here later. 
+1. run `make deploy-infra`
+1. setup google-IdP: see auth0 documentation [here](https://auth0.com/docs/connections/social/google)
+1. update DSS environment values and use the outputted application_secret within the data-store
 
 
 ### Terraform Installation
@@ -64,9 +72,6 @@ Then use the following command to set the secret within the aws secret manager
 ```
 scripts/set_secret.py --secret-name $AUTH_TENANT_SECRET_NAME < $DSS_AUTH_HOME/tenant_secrets.json   
 ```
-
-### Infra Deployment
-
 
 ### Updating Requirements
 
