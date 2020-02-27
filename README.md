@@ -5,7 +5,7 @@ This repo is used to setup an Auth service for the [data-store](https://github.c
 Setup Steps
 
 1. configure a tenant with Auth0
-1. set the secret with the tenant information in the aws secret-store [Secret Setup](#Secret-Setup)
+1. set the secret with the Auth0 Management API in the aws secret-store [Secret Setup](#Secret-Setup)
 1. deploy infra -> sets up all the stuff. more here later. 
 
 
@@ -51,6 +51,8 @@ pip install -r requirements.txt
 ### Secret Setup
 
 In order to get the infra scripts setup correctly, some of the auth0 tenant data needs to be uploaded, here is an example:
+The `tentant_client_id` and `tenant_client_secret` can be found by creating an `Auth0 Management API`, then into the
+Application settings for the `API Exploration Application`**** 
 
 `$DSS_AUTH_HOME/tenant_secrets.json`
 ```
