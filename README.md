@@ -11,7 +11,7 @@ OIDC_Claims (email / group) to indicate additional information to the resource-s
 1. Install Terraform provider: [see info below](#Terraform-Installation) 
 1. Configure a tenant with Auth0
 1. Update `$DSS_AUTH_HOME/environment` values with information from Tenant
-1. Set the secret with the Auth0 Management API in the aws secret-store [Secret Setup](#Secret-Setup)
+1. Set the auth tenant secret with the Auth0 Management API in the AWS secrets store [Secret Setup](#Secret-Setup)
 1. Run `make deploy-infra`
 1. Setup google-IdP: see auth0 documentation [here](https://auth0.com/docs/connections/social/google)
 1. Update DSS environment values and use the outputted application_secret within the data-store
@@ -89,4 +89,3 @@ To update the requirements file `requirements.txt` from `requirements.txt.in`, u
 ```
 make refresh_all_requirements
 ```
-
