@@ -66,12 +66,18 @@ function (user, context, callback) {
       });
 
     context.accessToken[namespace + 'email']= user.email;
+    context.accessToken[namespace + 'auth0'] = {
+ 		groups : user.groups,
+ 		roles: user.roles,
+ 		permissions: user.permissions
+    };
 
     if (userHasAccess) {
       context.accessToken[namespace + 'group'] = 'dbio';
     } else {
       context.accessToken[namespace + 'group'] = 'public';
     }
+
     callback(null, user, context);
 }
 EOF

@@ -8,14 +8,20 @@ OIDC_Claims (email / group) to indicate additional information to the resource-s
 
 ### Setup/Deploy Steps
 
-1. install Terraform provider: [see info below](#Terraform-Installation) 
-1. configure a tenant with Auth0
-1. update `$DSS_AUTH_HOME/environment` values with information from Tenant
-1. set the secret with the Auth0 Management API in the aws secret-store [Secret Setup](#Secret-Setup)
-1. run `make deploy-infra`
-1. setup google-IdP: see auth0 documentation [here](https://auth0.com/docs/connections/social/google)
-1. update DSS environment values and use the outputted application_secret within the data-store
+1. Install Terraform provider: [see info below](#Terraform-Installation) 
+1. Configure a tenant with Auth0
+1. Update `$DSS_AUTH_HOME/environment` values with information from Tenant
+1. Set the secret with the Auth0 Management API in the aws secret-store [Secret Setup](#Secret-Setup)
+1. Run `make deploy-infra`
+1. Setup google-IdP: see auth0 documentation [here](https://auth0.com/docs/connections/social/google)
+1. Update DSS environment values and use the outputted application_secret within the data-store
 
+### Fine-Grained Access Control
+The data-store uses the auth0 authorization extension to add in `groups`, `permissions`, and `roles` information within the JWT.
+
+1. Enable the extension on the tenant using the following [guide](https://auth0.com/docs/extensions/authorization-extension/v2)
+1. Configure the extension rule with the following [guide](https://auth0.com/docs/extensions/authorization-extension/v2/implementation/configuration)
+1. Within the rules, move the `auth0-authorization-extension` rule above the `jwt-claim-from-domain` rule within the Rules page.
 
 ### Terraform Installation
 
