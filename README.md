@@ -2,12 +2,26 @@
 
 This repo is used to setup an Auth service for the [data-store](https://github.com/databiosphere/data-store).
 
-Setup Steps
+Auth0 provides a resource server that is used for Auth service requests, enabling certain users to perform protected actions.
+The Auth server client is connected into Google IdProvider as a social identity provider. JWT's are populated with custom
+OIDC_Claims (email / group) to indicate additional information to the resource-server for access control.
 
-1. configure a tenant with Auth0
-1. set the secret with the Auth0 Management API in the aws secret-store [Secret Setup](#Secret-Setup)
-1. deploy infra -> sets up all the stuff. more here later. 
+### Setup/Deploy Steps
 
+1. Install Terraform provider: [see info below](#Terraform-Installation) 
+1. Configure a tenant with Auth0
+1. Update `$DSS_AUTH_HOME/environment` values with information from Tenant
+1. Set the auth tenant secret with the Auth0 Management API in the AWS secrets store [Secret Setup](#Secret-Setup)
+1. Run `make deploy-infra`
+1. Setup google-IdP: see auth0 documentation [here](https://auth0.com/docs/connections/social/google)
+1. Update DSS environment values and use the outputted application_secret within the data-store
+
+### Fine-Grained Access Control
+The data-store uses the auth0 authorization extension to add in `groups`, `permissions`, and `roles` information within the JWT.
+
+1. Enable the extension on the tenant using the following [guide](https://auth0.com/docs/extensions/authorization-extension/v2)
+1. Configure the extension rule with the following [guide](https://auth0.com/docs/extensions/authorization-extension/v2/implementation/configuration)
+1. Within the rules, move the `auth0-authorization-extension` rule above the `jwt-claim-from-domain` rule within the Rules page.
 
 ### Terraform Installation
 
@@ -65,9 +79,6 @@ Then use the following command to set the secret within the aws secret manager
 scripts/set_secret.py --secret-name $AUTH_TENANT_SECRET_NAME < $DSS_AUTH_HOME/tenant_secrets.json   
 ```
 
-### Infra Deployment
-
-
 ### Updating Requirements
 
 The file `requirements.txt.in` contains a short list of less strict version requirements. These are resolved and
@@ -78,4 +89,3 @@ To update the requirements file `requirements.txt` from `requirements.txt.in`, u
 ```
 make refresh_all_requirements
 ```
-
