@@ -27,7 +27,7 @@ resource "auth0_client" "dss_auth" {
   is_token_endpoint_ip_header_trusted = true
   token_endpoint_auth_method = "client_secret_post"
   oidc_conformant = true
-  callbacks = [ "http://localhost:8080" ]
+  callbacks = [ "http://localhost:8080", "https://dss.dev.ucsc-cgp-redwood.org/internal/echo" ]
   allowed_origins = [ "http://localhost:8080" ]
   grant_types = [ "authorization_code", "refresh_token" ]
 
