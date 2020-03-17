@@ -1,0 +1,14 @@
+# Reminder:
+# - A leading slash means the pattern is anchored at the root.
+# - No leading slash means the pattern matches at any depth.
+
+.chalice/deployed.json
+.chalice/deployments/
+.chalice/policy.json
+.chalice/policy-*.json
+.chalice/venv/
+.chalice/
+chalicelib
+vendor
+requirements.txt
+auth/

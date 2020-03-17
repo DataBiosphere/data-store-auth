@@ -20,6 +20,12 @@ DSS_INFRA_TAG_PROJECT="${DSS_PLATFORM}-dss"
 DSS_INFRA_TAG_SERVICE="dss"
 DSS_INFRA_TAG_OWNER="team-redwood-group@ucsc.edu"
 
+
+# TODO refactor this domain to work with prod, there might not be the stage name.
+# this is used to setup the auth domain
+API_DOMAIN_NAME="auth.${DSS_DEPLOYMENT_STAGE}.ucsc-cgp-redwood.org"
+CHALICE_APP_NAME="auth0-proxy-${DSS_DEPLOYMENT_STAGE}"
+
 # dont use interpolation on the stage here, its going to change the claims that are set in the auth0_rule
 # Warning back slashes are sensitive here
 OIDC_AUDIENCE=https://dev.ucsc-cgp-redwood.org/
