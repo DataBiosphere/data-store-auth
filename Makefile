@@ -20,3 +20,10 @@ refresh_all_requirements:
 	@if [ $$(uname -s) == "Darwin" ]; then sleep 1; fi  # this is require because Darwin HFS+ only has second-resolution for timestamps.
 	@touch requirements.txt.in
 	@$(MAKE) requirements.txt
+
+clean:
+	git clean -Xdf chalice daemons $(MODULES)
+	git clean -df {chalice,daemons/*}/{chalicelib,domovoilib,vendor}
+	git checkout $$(git status --porcelain {chalice,daemons/*}/.chalice/config.json | awk '{print $$2}')
+	-rm -rf .*-env
+	-rm -rf node_modules
